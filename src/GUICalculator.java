@@ -4,8 +4,8 @@ import java.awt.event.*;
 public class GUICalculator implements ActionListener {
 	
 	TextField screen;
-	Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, bplus, bminus, btimes, bdivide, bequals, bclear;
-	float currentValue;
+	Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, bplus, bminus, btimes, bdivide, bequals, bclear, bdecimal;
+	double currentValue;
 	Button currentOperation;
 	Frame err;
 	
@@ -18,8 +18,9 @@ public class GUICalculator implements ActionListener {
 			}
 		});
 		
-		Panel p1 = new Panel(), p2 = new Panel();
+		Panel p1 = new Panel(), p2 = new Panel(), p3 = new Panel();
 		p2.setLayout(new GridLayout(4,4));
+		p3.setLayout(new GridLayout(2,1));
 		
 		screen = new TextField(50);
 		b0 = new Button("0");
@@ -38,6 +39,7 @@ public class GUICalculator implements ActionListener {
 		bdivide = new Button("/");
 		bequals = new Button("=");
 		bclear = new Button("C");
+		bdecimal = new Button(".");
 		
 		b0.addActionListener(this);
 		b1.addActionListener(this);
@@ -55,8 +57,11 @@ public class GUICalculator implements ActionListener {
 		bdivide.addActionListener(this);
 		bequals.addActionListener(this);
 		bclear.addActionListener(this);
+		bdecimal.addActionListener(this);
 		
 		p1.add(screen);
+		p3.add(bequals);
+		p3.add(bdecimal);
 		p2.add(b7);
 		p2.add(b8);
 		p2.add(b9);
@@ -70,7 +75,7 @@ public class GUICalculator implements ActionListener {
 		p2.add(b3);
 		p2.add(btimes);
 		p2.add(b0);
-		p2.add(bequals);
+		p2.add(p3);
 		p2.add(bclear);
 		p2.add(bdivide);
 		
@@ -88,60 +93,18 @@ public class GUICalculator implements ActionListener {
 	
 	public void actionPerformed(ActionEvent x) {
 		Button btn = (Button)x.getSource();
-		if(btn == b0) {
-			screen.setText(screen.getText()+"0");
+		if(btn == b0 || btn == b1 || btn == b2 || btn == b3 || btn == b4 || btn == b5 || btn == b6 || btn == b7 || btn == b8 || btn == b9 || btn == bdecimal) {
+			screen.setText(screen.getText()+btn.getLabel());
 		}
-		if(btn == b1) {
-			screen.setText(screen.getText()+"1");
-		}
-		if(btn == b2) {
-			screen.setText(screen.getText()+"2");
-		}
-		if(btn == b3) {
-			screen.setText(screen.getText()+"3");
-		}
-		if(btn == b4) {
-			screen.setText(screen.getText()+"4");
-		}
-		if(btn == b5) {
-			screen.setText(screen.getText()+"5");
-		}
-		if(btn == b6) {
-			screen.setText(screen.getText()+"6");
-		}
-		if(btn == b7) {
-			screen.setText(screen.getText()+"7");
-		}
-		if(btn == b8) {
-			screen.setText(screen.getText()+"8");
-		}
-		if(btn == b9) {
-			screen.setText(screen.getText()+"9");
-		}
-		if(btn == bplus) {
+		if(btn == bplus || btn == bminus || btn == btimes || btn == bdivide) {
 			mathematics();
-			currentOperation=bplus;
-			screen.setText("");
-		}
-		if(btn == bminus) {
-			mathematics();
-			currentOperation=bminus;
-			screen.setText("");
-		}
-		if(btn == btimes) {
-			mathematics();
-			currentOperation=btimes;
-			screen.setText("");
-		}
-		if(btn == bdivide) {
-			mathematics();
-			currentOperation=bdivide;
+			currentOperation=btn;
 			screen.setText("");
 		}
 		if(btn == bequals) {
 			mathematics();
 			currentOperation=null;
-			screen.setText(Float.toString(currentValue));
+			screen.setText(Double.toString(currentValue));
 		}
 		if(btn == bclear) {
 			currentOperation=null;
@@ -154,15 +117,15 @@ public class GUICalculator implements ActionListener {
 		try {
 			if(!screen.getText().contentEquals("")) {
 				if(currentOperation==bplus)
-					currentValue+=Float.parseFloat(screen.getText());
+					currentValue+=Double.parseDouble(screen.getText());
 				else if(currentOperation==bminus)
-					currentValue-=Float.parseFloat(screen.getText());
+					currentValue-=Double.parseDouble(screen.getText());
 				else if(currentOperation==btimes)
-					currentValue*=Float.parseFloat(screen.getText());
+					currentValue*=Double.parseDouble(screen.getText());
 				else if(currentOperation==bdivide)
-					currentValue/=Float.parseFloat(screen.getText());
+					currentValue/=Double.parseDouble(screen.getText());
 				else
-					currentValue=Float.parseFloat(screen.getText());
+					currentValue=Double.parseDouble(screen.getText());
 			}
 		}
 		catch(NumberFormatException e) {
