@@ -7,10 +7,10 @@ public class GUICalculator implements ActionListener {
 	Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, bplus, bminus, btimes, bdivide, bequals, bclear, bdecimal;
 	double currentValue;
 	Button currentOperation;
-	Frame err;
+	Frame f, err;
 	
 	public GUICalculator() {
-		Frame f = new Frame("Calculator");
+		f = new Frame("Calculator");
 		
 		f.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -145,9 +145,11 @@ public class GUICalculator implements ActionListener {
 				err.add(p1, BorderLayout.WEST);
 				err.add(p2, BorderLayout.EAST);
 				err.setSize(330,80);
+				err.setLocation(f.getLocation());
 				err.setVisible(true);
 			}
 			else {
+				err.setLocation(f.getLocation());
 				err.setVisible(true);
 			}
 		}
